@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeltorERP.Web", "VeltorERP.Web\VeltorERP.Web.csproj", "{FA955CB8-4C8F-45B4-8E0F-96176E79FE01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeltorERP.Domain", "VeltorERP.Domain\VeltorERP.Domain.csproj", "{6BF437CF-9641-4B08-A391-72ED6A869A9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeltorERP.Application", "VeltorERP.Application\VeltorERP.Application.csproj", "{FCF27FD7-E5F6-44BA-86CB-4F2DB00BD63B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeltorERP.Infrastructure", "VeltorERP.Infrastructure\VeltorERP.Infrastructure.csproj", "{BB80B238-0434-4A42-A39A-B0D35DB3A75B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA955CB8-4C8F-45B4-8E0F-96176E79FE01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA955CB8-4C8F-45B4-8E0F-96176E79FE01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA955CB8-4C8F-45B4-8E0F-96176E79FE01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA955CB8-4C8F-45B4-8E0F-96176E79FE01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BF437CF-9641-4B08-A391-72ED6A869A9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BF437CF-9641-4B08-A391-72ED6A869A9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BF437CF-9641-4B08-A391-72ED6A869A9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BF437CF-9641-4B08-A391-72ED6A869A9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCF27FD7-E5F6-44BA-86CB-4F2DB00BD63B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCF27FD7-E5F6-44BA-86CB-4F2DB00BD63B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCF27FD7-E5F6-44BA-86CB-4F2DB00BD63B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCF27FD7-E5F6-44BA-86CB-4F2DB00BD63B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB80B238-0434-4A42-A39A-B0D35DB3A75B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB80B238-0434-4A42-A39A-B0D35DB3A75B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB80B238-0434-4A42-A39A-B0D35DB3A75B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB80B238-0434-4A42-A39A-B0D35DB3A75B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
