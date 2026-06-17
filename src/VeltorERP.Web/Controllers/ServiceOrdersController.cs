@@ -112,4 +112,20 @@ public class ServiceOrdersController : Controller
             "Id",
             "Plate");
     }
+
+    [HttpGet]
+    public async Task<JsonResult> GetVehiclesByCustomer(Guid customerId)
+    {
+        var vehicles = await _context.Vehicles
+            .Where(v => v.CustomerId == customerId)
+            .OrderBy(v => v.Plate)
+            .Select(v => new
+            {
+                id = v.Id,
+                text = v.Plate + " - " + v.Brand + " " + v.Model
+            })
+            .ToListAsync();
+
+        return Json(vehicles);
+    }
 }
