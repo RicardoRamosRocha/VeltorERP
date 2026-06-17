@@ -17,4 +17,6 @@ public class Customer
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public Company? Company { get; set; }
+
+    public ICollection<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
 }
