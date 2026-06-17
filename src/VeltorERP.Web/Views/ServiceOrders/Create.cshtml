@@ -1,0 +1,65 @@
+@model VeltorERP.Domain.Entities.ServiceOrder
+
+@{
+    ViewData["Title"] = "Nova Ordem de Serviço";
+}
+
+<h2>Nova Ordem de Serviço</h2>
+
+<form asp-action="Create">
+
+    <div class="mb-3">
+        <label>Cliente</label>
+        <select asp-for="CustomerId" asp-items="ViewBag.Customers" class="form-select"></select>
+    </div>
+
+    <div class="mb-3">
+        <label>Veículo</label>
+        <select asp-for="VehicleId" asp-items="ViewBag.Vehicles" class="form-select"></select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Complaint"></label>
+        <textarea asp-for="Complaint" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Diagnosis"></label>
+        <textarea asp-for="Diagnosis" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ServicePerformed"></label>
+        <textarea asp-for="ServicePerformed" class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Mileage"></label>
+        <input asp-for="Mileage" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="LaborCost"></label>
+        <input asp-for="LaborCost" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PartsCost"></label>
+        <input asp-for="PartsCost" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Status"></label>
+        <select asp-for="Status" class="form-select">
+            <option>Em Aberto</option>
+            <option>Em Andamento</option>
+            <option>Aguardando Aprovação</option>
+            <option>Finalizada</option>
+            <option>Cancelada</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+
+</form>

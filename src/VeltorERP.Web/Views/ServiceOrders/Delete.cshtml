@@ -1,0 +1,18 @@
+@model VeltorERP.Domain.Entities.ServiceOrder
+
+<h2>Excluir Ordem de Serviço</h2>
+
+<p>Deseja excluir esta ordem de serviço?</p>
+
+<p>
+    <strong>Cliente:</strong> @Model.Customer?.Name <br />
+    <strong>Veículo:</strong> @Model.Vehicle?.Plate <br />
+    <strong>Status:</strong> @Model.Status
+</p>
+
+<form asp-action="Delete">
+    <input asp-for="Id" type="hidden" />
+
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

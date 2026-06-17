@@ -1,0 +1,41 @@
+@model IEnumerable<VeltorERP.Domain.Entities.ServiceOrder>
+
+@{
+    ViewData["Title"] = "Ordens de Serviço";
+}
+
+<h2>Ordens de Serviço</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">
+    Nova Ordem de Serviço
+</a>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Cliente</th>
+            <th>Veículo</th>
+            <th>Status</th>
+            <th>Total</th>
+            <th width="180"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.OpeningDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.Customer?.Name</td>
+                <td>@item.Vehicle?.Plate</td>
+                <td>@item.Status</td>
+                <td>@item.TotalAmount.ToString("C")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
