@@ -46,8 +46,15 @@
                 <td>@item.Email</td>
 
                 <td>
-                    Editar |
-                    Excluir
+
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                        Editar
+                    </a>
+
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                        Excluir
+                    </a>
+
                 </td>
 
             </tr>

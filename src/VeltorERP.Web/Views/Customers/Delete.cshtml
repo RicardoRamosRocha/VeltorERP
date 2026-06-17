@@ -1,0 +1,21 @@
+@model VeltorERP.Domain.Entities.Customer
+
+<h2>Excluir Cliente</h2>
+
+<p>Deseja realmente excluir este cliente?</p>
+
+<strong>@Model.Name</strong>
+
+<form asp-action="Delete">
+
+    <input asp-for="Id" type="hidden" />
+
+    <button type="submit" class="btn btn-danger">
+        Excluir
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Cancelar
+    </a>
+
+</form>
