@@ -27,20 +27,25 @@ public class CustomersController : Controller
     {
         return View();
     }
-
+    
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Customer customer)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(customer);
+        }
+
         customer.Id = Guid.NewGuid();
         customer.CreatedAt = DateTime.UtcNow;
+        customer.CompanyId = null;
 
         _context.Customers.Add(customer);
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));
     }
-
     public async Task<IActionResult> Edit(Guid id)
     {
         var customer = await _context.Customers.FindAsync(id);

@@ -15,7 +15,9 @@
 
     <div class="mb-3">
         <label>Veículo</label>
-        <select asp-for="VehicleId" asp-items="ViewBag.Vehicles" class="form-select"></select>
+        <select asp-for="VehicleId" class="form-select">
+    <option value="">Selecione um cliente primeiro</option>
+</select>
     </div>
 
     <div class="mb-3">
@@ -63,3 +65,27 @@
     <a asp-action="Index" class="btn btn-secondary">Voltar</a>
 
 </form>
+
+@section Scripts {
+    <script>
+        document.getElementById("CustomerId").addEventListener("change", function () {
+            const customerId = this.value;
+            const vehicleSelect = document.getElementById("VehicleId");
+
+            vehicleSelect.innerHTML = '<option value="">Carregando...</option>';
+
+            fetch(`/ServiceOrders/GetVehiclesByCustomer?customerId=${customerId}`)
+                .then(response => response.json())
+                .then(data => {
+                    vehicleSelect.innerHTML = '<option value="">Selecione o veículo</option>';
+
+                    data.forEach(vehicle => {
+                        const option = document.createElement("option");
+                        option.value = vehicle.id;
+                        option.text = vehicle.text;
+                        vehicleSelect.appendChild(option);
+                    });
+                });
+        });
+    </script>
+}
