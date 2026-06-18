@@ -48,7 +48,9 @@ public class ServiceOrdersController : Controller
 
     public async Task<IActionResult> Edit(Guid id)
     {
-        var order = await _context.ServiceOrders.FindAsync(id);
+        var order = await _context.ServiceOrders
+    .Include(x => x.Items)
+    .FirstOrDefaultAsync(x => x.Id == id);
 
         if (order == null)
             return NotFound();
@@ -57,21 +59,37 @@ public class ServiceOrdersController : Controller
         return View(order);
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(Guid id, ServiceOrder serviceOrder)
+   [HttpPost]
+[ValidateAntiForgeryToken]
+public async Task<IActionResult> Edit(Guid id, ServiceOrder serviceOrder)
+{
+    if (id != serviceOrder.Id)
+        return NotFound();
+
+    serviceOrder.OpeningDate = DateTime.SpecifyKind(
+        serviceOrder.OpeningDate,
+        DateTimeKind.Utc);
+
+    if (serviceOrder.ClosingDate.HasValue)
     {
-        if (id != serviceOrder.Id)
-            return NotFound();
-
-        serviceOrder.TotalAmount = serviceOrder.LaborCost + serviceOrder.PartsCost;
-
-        _context.Update(serviceOrder);
-        await _context.SaveChangesAsync();
-
-        return RedirectToAction(nameof(Index));
+        serviceOrder.ClosingDate = DateTime.SpecifyKind(
+            serviceOrder.ClosingDate.Value,
+            DateTimeKind.Utc);
     }
 
+    var itemsTotal = await _context.ServiceOrderItems
+    .Where(x => x.ServiceOrderId == serviceOrder.Id)
+    .SumAsync(x => x.Total);
+
+    serviceOrder.TotalAmount =
+    serviceOrder.LaborCost +
+    serviceOrder.PartsCost +
+    itemsTotal;
+    _context.Update(serviceOrder);
+    await _context.SaveChangesAsync();
+
+    return RedirectToAction(nameof(Index));
+}
     public async Task<IActionResult> Delete(Guid id)
     {
         var order = await _context.ServiceOrders

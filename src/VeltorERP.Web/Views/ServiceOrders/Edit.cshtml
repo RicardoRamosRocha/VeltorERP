@@ -6,6 +6,93 @@
 
 <h2>Editar Ordem de Serviço</h2>
 
+<a asp-controller="ServiceOrderItems"
+   asp-action="Create"
+   asp-route-serviceOrderId="@Model.Id"
+   class="btn btn-primary mb-3">
+
+    Adicionar Item
+
+</a>
+
+<hr />
+
+<h4>Itens da Ordem de Serviço</h4>
+
+<table class="table table-sm">
+
+    <thead>
+    <tr>
+        <th>Descrição</th>
+        <th>Qtd</th>
+        <th>Valor Unit.</th>
+        <th>Total</th>
+        <th>Ações</th>
+    </tr>
+</thead>
+
+    <tbody>
+
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+
+                <td>@item.Description</td>
+
+                <td>@item.Quantity</td>
+
+                <td>@item.UnitPrice.ToString("C")</td>
+
+                <td>@item.Total.ToString("C")</td>
+
+                <td>
+
+                    <form asp-controller="ServiceOrderItems" asp-action="Delete" method="post">
+
+                        <input type="hidden" name="id" value="@item.Id" />
+
+                        <button type="submit" class="btn btn-danger btn-sm">
+
+                            Excluir
+
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+<div class="card mt-3 mb-4">
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <strong>Mão de Obra:</strong>
+                @Model.LaborCost.ToString("C")
+            </div>
+
+            <div class="col-md-4">
+                <strong>Peças:</strong>
+                @Model.PartsCost.ToString("C")
+            </div>
+
+            <div class="col-md-4">
+                <strong>Total Geral:</strong>
+                @Model.TotalAmount.ToString("C")
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
 <form asp-action="Edit">
 
     <input asp-for="Id" type="hidden" />

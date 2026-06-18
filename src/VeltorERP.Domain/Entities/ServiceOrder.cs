@@ -43,4 +43,6 @@ public class ServiceOrder
     public Customer? Customer { get; set; }
 
     public Vehicle? Vehicle { get; set; }
+
+    public ICollection<ServiceOrderItem> Items { get; set; } = new List<ServiceOrderItem>();
 }
