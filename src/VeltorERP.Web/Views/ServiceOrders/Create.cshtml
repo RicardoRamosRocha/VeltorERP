@@ -10,24 +10,25 @@
 
     <div class="mb-3">
         <label>Cliente</label>
-        <select asp-for="CustomerId" asp-items="ViewBag.Customers" class="form-select"></select>
-    </div>
+        <select asp-for="CustomerId" asp-items="ViewBag.Customers" class="form-select">
+            <option value="">Selecione o cliente</option>
+        </select>
 
-    <div class="mb-3">
-        <label>Veículo</label>
-        <select asp-for="VehicleId" class="form-select">
-    <option value="">Selecione um cliente primeiro</option>
-</select>
-    </div>
+        <div class="mb-3">
+            <label>Veículo</label>
+            <select asp-for="VehicleId" class="form-select">
+                <option value="">Selecione um cliente primeiro</option>
+            </select>
+        </div>
 
-    <div class="mb-3">
-        <label asp-for="Complaint"></label>
-        <textarea asp-for="Complaint" class="form-control"></textarea>
-    </div>
+        <div class="mb-3">
+            <label asp-for="Complaint"></label>
+            <textarea asp-for="Complaint" class="form-control"></textarea>
+        </div>
 
-    <div class="mb-3">
-        <label asp-for="Diagnosis"></label>
-        <textarea asp-for="Diagnosis" class="form-control"></textarea>
+        <div class="mb-3">
+            <label asp-for="Diagnosis"></label>
+            <textarea asp-for="Diagnosis" class="form-control"></textarea>
     </div>
 
     <div class="mb-3">

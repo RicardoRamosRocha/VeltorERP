@@ -2,28 +2,64 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="container">
+<h2 class="mb-4">Dashboard</h2>
 
-    <h2 class="mb-4">Dashboard</h2>
+<div class="row">
 
-    <div class="row">
-
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h3>@ViewBag.TotalCustomers</h3>
-                    <p>Clientes</p>
-                </div>
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h2>@ViewBag.TotalCustomers</h2>
+                <p>Clientes</p>
             </div>
         </div>
+    </div>
 
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h3>@ViewBag.TotalVehicles</h3>
-                    <p>Veículos</p>
-                </div>
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h2>@ViewBag.TotalVehicles</h2>
+                <p>Veículos</p>
             </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h2>@ViewBag.OpenOrders</h2>
+                <p>OS Abertas</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h2>@ViewBag.FinishedOrders</h2>
+                <p>OS Finalizadas</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-6">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body">
+
+                <h5>Faturamento</h5>
+
+                <h2 class="text-success">
+                    @(((decimal)ViewBag.TotalRevenue).ToString("C"))
+                </h2>
+
+            </div>
+
         </div>
 
     </div>

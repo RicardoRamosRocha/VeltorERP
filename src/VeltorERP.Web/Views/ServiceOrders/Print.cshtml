@@ -1,0 +1,73 @@
+@model VeltorERP.Domain.Entities.ServiceOrder
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <title>Ordem de Serviço</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+
+<body class="p-4">
+
+    <h2>Veltor ERP</h2>
+    <h4>Ordem de Serviço</h4>
+
+    <hr />
+
+    <p><strong>Cliente:</strong> @Model.Customer?.Name</p>
+    <p><strong>Veículo:</strong> @Model.Vehicle?.Plate - @Model.Vehicle?.Brand @Model.Vehicle?.Model</p>
+    <p><strong>Status:</strong> @Model.Status</p>
+    <p><strong>Data:</strong> @Model.OpeningDate.ToString("dd/MM/yyyy")</p>
+
+    <hr />
+
+    <h5>Relato do Cliente</h5>
+    <p>@Model.Complaint</p>
+
+    <h5>Diagnóstico</h5>
+    <p>@Model.Diagnosis</p>
+
+    <h5>Serviço Executado</h5>
+    <p>@Model.ServicePerformed</p>
+
+    <hr />
+
+    <h5>Itens</h5>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Qtd</th>
+                <th>Valor Unit.</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Description</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.UnitPrice.ToString("C")</td>
+                    <td>@item.Total.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h4 class="text-end">
+        Total Geral: @Model.TotalAmount.ToString("C")
+    </h4>
+
+    <button onclick="window.print()" class="btn btn-primary mt-4">
+        Imprimir
+    </button>
+
+</body>
+</html>

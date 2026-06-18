@@ -15,13 +15,26 @@ public class ServiceOrdersController : Controller
         _context = context;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? search)
     {
-        var orders = await _context.ServiceOrders
+        var query = _context.ServiceOrders
             .Include(x => x.Customer)
             .Include(x => x.Vehicle)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            query = query.Where(x =>
+                x.Customer!.Name.Contains(search) ||
+                x.Vehicle!.Plate.Contains(search) ||
+                x.Status.Contains(search));
+        }
+
+        var orders = await query
             .OrderByDescending(x => x.OpeningDate)
             .ToListAsync();
+
+        ViewBag.Search = search;
 
         return View(orders);
     }
@@ -55,41 +68,54 @@ public class ServiceOrdersController : Controller
         if (order == null)
             return NotFound();
 
-        LoadData();
+        ViewBag.Customers = new SelectList(
+      _context.Customers.OrderBy(x => x.Name),
+      "Id",
+      "Name",
+      order.CustomerId);
+
+        ViewBag.Vehicles = new SelectList(
+            _context.Vehicles
+                .Where(v => v.CustomerId == order.CustomerId)
+                .OrderBy(v => v.Plate),
+            "Id",
+            "Plate",
+            order.VehicleId);
+
         return View(order);
     }
 
-   [HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> Edit(Guid id, ServiceOrder serviceOrder)
-{
-    if (id != serviceOrder.Id)
-        return NotFound();
-
-    serviceOrder.OpeningDate = DateTime.SpecifyKind(
-        serviceOrder.OpeningDate,
-        DateTimeKind.Utc);
-
-    if (serviceOrder.ClosingDate.HasValue)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(Guid id, ServiceOrder serviceOrder)
     {
-        serviceOrder.ClosingDate = DateTime.SpecifyKind(
-            serviceOrder.ClosingDate.Value,
+        if (id != serviceOrder.Id)
+            return NotFound();
+
+        serviceOrder.OpeningDate = DateTime.SpecifyKind(
+            serviceOrder.OpeningDate,
             DateTimeKind.Utc);
+
+        if (serviceOrder.ClosingDate.HasValue)
+        {
+            serviceOrder.ClosingDate = DateTime.SpecifyKind(
+                serviceOrder.ClosingDate.Value,
+                DateTimeKind.Utc);
+        }
+
+        var itemsTotal = await _context.ServiceOrderItems
+        .Where(x => x.ServiceOrderId == serviceOrder.Id)
+        .SumAsync(x => x.Total);
+
+        serviceOrder.TotalAmount =
+        serviceOrder.LaborCost +
+        serviceOrder.PartsCost +
+        itemsTotal;
+        _context.Update(serviceOrder);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
     }
-
-    var itemsTotal = await _context.ServiceOrderItems
-    .Where(x => x.ServiceOrderId == serviceOrder.Id)
-    .SumAsync(x => x.Total);
-
-    serviceOrder.TotalAmount =
-    serviceOrder.LaborCost +
-    serviceOrder.PartsCost +
-    itemsTotal;
-    _context.Update(serviceOrder);
-    await _context.SaveChangesAsync();
-
-    return RedirectToAction(nameof(Index));
-}
     public async Task<IActionResult> Delete(Guid id)
     {
         var order = await _context.ServiceOrders
@@ -117,7 +143,6 @@ public async Task<IActionResult> Edit(Guid id, ServiceOrder serviceOrder)
 
         return RedirectToAction(nameof(Index));
     }
-
     private void LoadData()
     {
         ViewBag.Customers = new SelectList(
@@ -126,10 +151,12 @@ public async Task<IActionResult> Edit(Guid id, ServiceOrder serviceOrder)
             "Name");
 
         ViewBag.Vehicles = new SelectList(
-            _context.Vehicles.OrderBy(x => x.Plate),
-            "Id",
-            "Plate");
+            Enumerable.Empty<SelectListItem>(),
+            "Value",
+            "Text");
     }
+
+
 
     [HttpGet]
     public async Task<JsonResult> GetVehiclesByCustomer(Guid customerId)
@@ -145,5 +172,18 @@ public async Task<IActionResult> Edit(Guid id, ServiceOrder serviceOrder)
             .ToListAsync();
 
         return Json(vehicles);
+    }
+    public async Task<IActionResult> Print(Guid id)
+    {
+        var order = await _context.ServiceOrders
+            .Include(x => x.Customer)
+            .Include(x => x.Vehicle)
+            .Include(x => x.Items)
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (order == null)
+            return NotFound();
+
+        return View(order);
     }
 }
